@@ -1,150 +1,3 @@
-/* Reset y box-sizing global */
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
-
-/* 📱 MÓVIL
-0px - 600px
-Diseño base
-*/
-
-/* Style top */
-.top-redes{
-    background-color: #000000;
-    width: 100%;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding-left: 10px;
-}
-
-.top-redes img {
-    width: 20px;
-    display: block;
-    filter: brightness(0) invert(1);
-}
-
-.top-redes p {
-    color: white;
-    margin-left: auto;
-}
-
-#delivery-icon{
-    margin-right: 10px;
-}
-
-#logo {
-    width: 55px;
-    height: auto;
-    display: block;
-}
-
-.left_logo{
-    width: 100%;
-    height: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    background: #fff;
-    box-shadow: 0 4px 32px rgba(0,0,0,0.12);
-    margin-bottom: 15px;
-}
-
-.logo_name {
-    font-family: 'Fredoka', sans-serif;
-    font-size: 30px;
-    font-weight: 600;
-    color: beige;
-    -webkit-text-stroke: 1px #000000;
-    margin: 0;
-}
-
-#text_art {
-    color: #e63946;
-    -webkit-text-stroke: 0px #000000;
-    font-size: 25px;
-    font-weight: 600;
-    margin-left: 3px;
-}
-
-.logo_slogan {
-    font-family: 'Fredoka', sans-serif;
-    color: black;
-    margin-left: 20px;
-    font-size: 15px;
-    font-weight: 600;
-}
-
-.description{
-    display: none;
-}
-
-.navbar{
-    display: none;
-}
-
-.banner {
-    width: 100%;
-    position: relative;
-    display: flex;
-    justify-content: center;
-}
-
-.banner img {
-    width: 90%;
-    height: auto;
-    border-radius: 15px;
-    display: block;
-}
-
-.banner-content {
-    position: absolute;
-    top: 50%;
-    left: 10%;
-    transform: translateY(-50%);
-    width: 45%;
-}
-
-.banner-content h2 {
-    font-family: 'Fredoka', sans-serif;
-    font-size: 27px;
-    line-height: 1.05;
-    font-weight: 700;
-    color: #E63946;
-    margin: 0 0 15px 0;
-    text-shadow: 0px 1px 20px #000000;
-}
-
-.banner-content button {
-    background-color: #E63946;
-    color: black;
-    border: none;
-    padding: 10px 18px;
-    border-radius: 8px;
-    font-family: sans-serif;
-    font-weight: 600;
-    font-size: 13px;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-}
-
-.banner-content button:hover {
-    transform: scale(1.1);
-}
-
-
-/* 📱 TABLET
-601px - 899px
-*/
-@media (min-width: 601px) {
-
-}
-
-
 /* 💻 COMPUTADOR
 900px - 1440px
 */
@@ -169,13 +22,20 @@ Diseño base
 
 #logo {
     margin-left: 10px;
+    box-shadow: 0px 1px 25px 10px rgba(255, 255, 255, 0.15);
+    border-radius: 100px;
+}
+
+#logo:hover{
+    box-shadow: 0px 1px 25px 10px rgba(230, 152, 152, 0.15);
+    scale: 1.1;
+    transition: 2s;
 }
 
 .left_logo{
     background: rgb(0, 0, 0);    
     margin-bottom: 0px;
 }
-
 
 .logo_slogan {
     font-size: 20px;
@@ -222,12 +82,31 @@ Diseño base
     color: beige;
 }
 
+#cart-count {
+    display: none;
+    margin-left: 6px;
+    background: #e63946;
+    color: #fff;
+    border-radius: 999px;
+    padding: 2px 7px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+#cart-count.visible {
+    display: inline-block;
+}
+
 .banner img {
     width: 100%;
     height: 45vh;
     border-radius: 0;
     object-fit: cover;
+    object-position: center 10%;
 }
+
+
 
 .banner-content h2 {
     font-size: 70px;
@@ -293,7 +172,7 @@ Diseño base
     width: 30px;
     height: 30px;
     display: block;
-    filter: brightness(0) saturate(100%) invert(31%) sepia(91%) saturate(1903%) hue-rotate(335deg) brightness(93%) contrast(91%);
+    filter: brightness(0) saturate(100%) invert(86%) sepia(20%) saturate(350%) hue-rotate(18deg) brightness(108%) contrast(92%);
 }
 
 .description-var h3 {

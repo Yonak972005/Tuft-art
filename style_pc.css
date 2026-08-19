@@ -2,7 +2,7 @@
 900px - 1440px
 */
 @media (min-width: 900px) {
-    .top-redes{
+    .top-redes {
     background-color: beige;
     padding-left: 10px;
 }
@@ -51,7 +51,7 @@
 
 .navbar ul {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     gap: 70px;
     margin: 0;
@@ -61,25 +61,17 @@
 }
 
 .navbar a {
-    color: #000000;
     font-family: 'Signika', sans-serif;
     font-size: 20px;
     font-weight: 600;
     text-decoration: none;
+    color: beige;
     transition: color 0.2s ease;
 }
 
 .navbar a:hover,
 .navbar a:focus-visible {
     color: #e63946;
-}
-
-.navbar ul {
-    justify-content: flex-end;
-}
-
-.navbar a {
-    color: beige;
 }
 
 #cart-count {
@@ -105,8 +97,6 @@
     object-fit: cover;
     object-position: center 10%;
 }
-
-
 
 .banner-content h2 {
     font-size: 70px;
@@ -137,62 +127,86 @@
 }
 
 .benefits {
-    width: 100%;
-    background-color: beige;
-    display: flex;
     justify-content: space-around;
-    align-items: center;
+    overflow-x: visible;
+    scroll-snap-type: none;
     padding: 20px 4%;
+    margin-top: 0px;
+    height: 12vh;
 }
 
 .benefit {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
     flex: 1;
 }
 
-.benefit:not(:last-child) {
-    border-right: 1px solid #D9D2C7;
+.benefits-dots {
+    display: none;
 }
 
 .benefit-icon {
-    width: 60px;
-    height: 60px;
-    min-width: 60px;
-    border-radius: 50%;
-    background-color: #000000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 90px;
+    height: 90px;
+    min-width: 80px;
 }
 
 .benefit-icon img {
-    width: 30px;
-    height: 30px;
+    width: 50px;
+    height: 50px;
     display: block;
     filter: brightness(0) saturate(100%) invert(86%) sepia(20%) saturate(350%) hue-rotate(18deg) brightness(108%) contrast(92%);
 }
 
 .description-var h3 {
-    margin: 0 0 6px 0;
-    font-family: 'Fredoka', sans-serif;
-    font-size: 15px;
+    font-size: 18px;
     font-weight: 700;
-    color: #111111;
-    text-transform: uppercase;
+
 }
 
 .description-var p {
-    margin: 0;
-    font-family: 'Signika', sans-serif;
-    font-size: 14px;
-    line-height: 1.4;
-    color: #222222;
+    font-size: 18px;
+
 }
 
+.title_works{
+    font-size: 30px;
+    font-weight: 600;
+    margin-top: 25px;
+}
 
+.pasos{
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+}
+
+.paso{
+margin-top: 15px;
+}
+
+.paso img{
+    width: 70px;
+    padding: 1px;
+    border-radius: 12px;
+}
+
+.paso h3{
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.paso p{
+    font-size: 25px;
+    font-weight: 500;
+}
+
+.number{
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    font-size: 20px;
+    background-color:#e63946;
+    color: black;
+    border: 1px solid #0000002c;
+}
 
 /* 📺 TV / PANTALLAS GRANDES
 1441px en adelante

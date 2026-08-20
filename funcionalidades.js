@@ -39,3 +39,85 @@
 
         benefitsSlider.addEventListener('scroll', updateBenefitsDot, { passive: true });
     }
+
+// Enlace oficial de tu Google Sheets en formato CSV
+const sheetCsvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTOrtb890NBzVIpObAuVqlxUvxQuqC68hrkHSgkfuWkZyqGHEgPmKf5Dw5mnIUN-ePUo2yQhzVuCehx/pub?gid=0&single=true&output=csv";
+
+// Función para procesar y organizar las filas del documento Excel (CSV)
+function parseCSV(text) {
+    const lines = text.split("\n");
+    if (lines.length === 0) return [];
+    
+    const headers = lines[0].split(",").map(h => h.trim().replace(/^"|"$/g, ''));
+    const result = [];
+
+    for (let i = 1; i < lines.length; i++) {
+        const currentLine = lines[i].trim();
+        if (!currentLine) continue; 
+        
+        const matches = currentLine.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || currentLine.split(",");
+        const obj = {};
+        
+        headers.forEach((header, index) => {
+            let value = matches[index] ? matches[index].trim() : "";
+            obj[header] = value.replace(/^"|"$/g, ''); 
+        });
+        result.push(obj);
+    }
+    return result;
+}
+
+async function getProducts() {
+    console.log("Consultando productos desde Google Sheets...");
+    
+    try {
+        const response = await fetch(sheetCsvUrl);
+        const csvText = await response.text();
+        const data = parseCSV(csvText);
+
+        console.log("Productos recibidos con éxito:", data);
+
+        // Seleccionamos las tarjetas que tienen el <span>$</span> fijo en el HTML
+        const cards = document.querySelectorAll(".card-product");
+
+        cards.forEach((card, index) => {
+            const product = data[index];
+
+            // Si el Excel no tiene información para esta tarjeta, la ocultamos de la pantalla
+            if (!product) {
+                card.style.display = "none";
+                return;
+            }
+
+            // Rellenamos los datos de los textos e imágenes
+            card.style.display = "block";
+            card.querySelector("img").src = product.image || "images/cloud-upload-signal.svg";
+            card.querySelector("img").alt = product.name || "alfombra";
+            card.querySelector(".title-product").textContent = product.name || "";
+            card.querySelector(".description-product").textContent = product.description || "";
+            card.querySelector(".dimensions").textContent = product.dimensions || "";
+            
+            // Buscamos el párrafo del precio
+            const priceParagraph = card.querySelector(".price");
+            const spanSigno = priceParagraph.querySelector("span");
+
+            if (product.price) {
+                // Formateamos el número de forma limpia (ej: 120000 -> 120.000)
+                const numeroFormateado = Number(product.price).toLocaleString("es-CO");
+                
+                // Inserta el número justo después del <span>$</span> sin romper nada
+                spanSigno.insertAdjacentText("afterend", numeroFormateado);
+            } else {
+                priceParagraph.textContent = "Consultar precio";
+            }
+        });
+
+    } catch (error) {
+        console.error("Error al cargar el catálogo desde el Excel:", error);
+    }
+}
+
+// Carga los productos automáticamente al abrir la página
+window.addEventListener("DOMContentLoaded", () => {
+    getProducts();
+});

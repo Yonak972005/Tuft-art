@@ -300,7 +300,7 @@ Diseño base
     display: grid;
     grid-template-columns: repeat(1, minmax(0, 1fr));
     justify-items: center;
-    margin-bottom: 70px;
+    margin-bottom: 10px;
 }
 
 .card-product{

@@ -121,3 +121,4 @@ async function getProducts() {
 window.addEventListener("DOMContentLoaded", () => {
     getProducts();
 });
+

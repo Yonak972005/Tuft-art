@@ -91,7 +91,12 @@ async function getProducts() {
     console.log("Consultando productos desde Google Sheets...");
     
     try {
-        const response = await fetch(sheetCsvUrl);
+        const response = await fetch(`${sheetCsvUrl}?v=${Date.now()}`, {
+            cache: "no-store"
+        });
+        if (!response.ok) {
+            throw new Error(`No se pudo cargar el catálogo (${response.status})`);
+        }
         const csvText = await response.text();
         const data = parseCSV(csvText);
 

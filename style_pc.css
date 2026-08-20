@@ -216,6 +216,11 @@
     grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
+.card-product:hover {
+    border-color: #ff7a83;
+
+}
+
 /* 📺 TV / PANTALLAS GRANDES
 1441px en adelante
 */

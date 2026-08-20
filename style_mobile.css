@@ -316,11 +316,6 @@ Diseño base
     transition: box-shadow 0.2s, border 0.2s;
 }
 
-.card-product:hover {
-    border-color: #ff7a83;
-
-}
-
 .card-product img{
     width: 30vh;
 }

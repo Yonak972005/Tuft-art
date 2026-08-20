@@ -40,8 +40,8 @@
         benefitsSlider.addEventListener('scroll', updateBenefitsDot, { passive: true });
     }
 
-// Enlace oficial de tu Google Sheets en formato CSV
-const sheetCsvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTOrtb890NBzVIpObAuVqlxUvxQuqC68hrkHSgkfuWkZyqGHEgPmKf5Dw5mnIUN-ePUo2yQhzVuCehx/pub?gid=0&single=true&output=csv";
+// Copia sincronizada desde Google Sheets durante el despliegue
+const sheetCsvUrl = "productos.csv";
 
 // Función para procesar y organizar las filas del documento Excel (CSV)
 function parseCSV(text) {

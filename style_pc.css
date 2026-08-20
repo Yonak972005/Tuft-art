@@ -4,7 +4,7 @@
 @media (min-width: 900px) {
     .top-redes {
     background-color: beige;
-    padding-left: 10px;
+    padding-left: 8px;
 }
 
 .top-redes img {
@@ -17,17 +17,17 @@
 }
 
 #delivery-icon{
-    margin-right: 10px;
+    margin-right: 8px;
 }
 
 #logo {
-    margin-left: 10px;
-    box-shadow: 0px 1px 25px 10px rgba(255, 255, 255, 0.15);
+    margin-left: 8px;
+    box-shadow: 0px 0.8px 20px 8px rgba(255, 255, 255, 0.15);
     border-radius: 100px;
 }
 
 #logo:hover{
-    box-shadow: 0px 1px 25px 10px rgba(230, 152, 152, 0.15);
+    box-shadow: 0px 0.8px 20px 8px rgba(230, 152, 152, 0.15);
     scale: 1.1;
     transition: 2s;
 }
@@ -38,7 +38,7 @@
 }
 
 .logo_slogan {
-    font-size: 20px;
+    font-size: 16px;
     color: beige;
 }
 
@@ -53,16 +53,16 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    gap: 70px;
+    gap: 56px;
     margin: 0;
-    padding: 0 50px;
+    padding: 0 40px;
     list-style: none;
     white-space: nowrap;
 }
 
 .navbar a {
     font-family: 'Signika', sans-serif;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 600;
     text-decoration: none;
     color: beige;
@@ -76,12 +76,12 @@
 
 #cart-count {
     display: none;
-    margin-left: 6px;
+    margin-left: 4.8px;
     background: #e63946;
     color: #fff;
     border-radius: 999px;
-    padding: 2px 7px;
-    font-size: 12px;
+    padding: 1.6px 5.6px;
+    font-size: 9.6px;
     font-weight: 700;
     line-height: 1.2;
 }
@@ -92,14 +92,14 @@
 
 .banner img {
     width: 100%;
-    height: 45vh;
+    height: 36vh;
     border-radius: 0;
     object-fit: cover;
     object-position: center 10%;
 }
 
 .banner-content h2 {
-    font-size: 70px;
+    font-size: 56px;
     font-weight: 700;
     color: #E63946;
 }
@@ -107,7 +107,7 @@
 .description {
     display: block;
     color: beige;
-    font-size: 30px;
+    font-size: 24px;
     font-weight:500;
     margin: 0 0 2% 0;
     text-shadow: 0px 1px 20px #000000;
@@ -117,9 +117,9 @@
     font-family: 'Fredoka', sans-serif;
     background-color: #E63946;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 12.8px;
     cursor: pointer;
-    padding: 8px 10px 10px 10px;
+    padding: 6.4px 8px 8px 8px;
 }
 
 .banner-content button:hover {
@@ -130,9 +130,9 @@
     justify-content: space-around;
     overflow-x: visible;
     scroll-snap-type: none;
-    padding: 20px 4%;
+    padding: 16px 3.2%;
     margin-top: 0px;
-    height: 12vh;
+    height: 9.6vh;
 }
 
 .benefit {
@@ -144,68 +144,76 @@
 }
 
 .benefit-icon {
-    width: 90px;
-    height: 90px;
-    min-width: 80px;
+    width: 62px;
+    height: 62px;
+    min-width: 64px;
 }
 
 .benefit-icon img {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     display: block;
     filter: brightness(0) saturate(100%) invert(86%) sepia(20%) saturate(350%) hue-rotate(18deg) brightness(108%) contrast(92%);
 }
 
 .description-var h3 {
-    font-size: 18px;
+    font-size: 14.4px;
     font-weight: 700;
-
 }
 
 .description-var p {
-    font-size: 18px;
+    font-size: 14.4px;
+}
+
+.how-works{
+    box-shadow: 0px 0.8px 20px 8px rgba(255, 255, 255, 105);
 
 }
 
 .title_works{
-    font-size: 30px;
+    font-size: 24px;
     font-weight: 600;
-    margin-top: 25px;
+    margin: 0px;
+    margin-top: 16px;
 }
 
 .pasos{
     grid-template-columns: repeat(4, minmax(0, 1fr));
-
 }
 
 .paso{
-margin-top: 15px;
+    margin-top: 12px;
 }
 
 .paso img{
-    width: 70px;
-    padding: 1px;
-    border-radius: 12px;
+    width: 56px;
+    padding: 0.8px;
+    border-radius: 9.6px;
 }
 
 .paso h3{
-    font-size: 30px;
+    font-size: 24px;
     font-weight: 500;
 }
 
 .paso p{
-    font-size: 25px;
+    font-size: 20px;
     font-weight: 500;
 }
 
 .number{
-    width: 45px;
-    height: 45px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    font-size: 20px;
+    font-size: 16px;
     background-color:#e63946;
     color: black;
     border: 1px solid #0000002c;
+}
+
+.products{
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
 /* 📺 TV / PANTALLAS GRANDES

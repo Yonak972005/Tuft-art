@@ -41,14 +41,13 @@
     }
 
 // Enlace oficial de tu Google Sheets en formato CSV
-const sheetCsvUrl = "https://google.com";
+const sheetCsvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTOrtb890NBzVIpObAuVqlxUvxQuqC68hrkHSgkfuWkZyqGHEgPmKf5Dw5mnIUN-ePUo2yQhzVuCehx/pub?gid=0&single=true&output=csv";
 
-// Función mejorada y robusta para procesar el archivo del Excel (CSV)
+// Función para procesar y organizar las filas del documento Excel (CSV)
 function parseCSV(text) {
-    const lines = text.split(/\r?\n/);
+    const lines = text.split("\n");
     if (lines.length === 0) return [];
     
-    // Leemos los encabezados de la primera fila
     const headers = lines[0].split(",").map(h => h.trim().replace(/^"|"$/g, ''));
     const result = [];
 
@@ -56,27 +55,12 @@ function parseCSV(text) {
         const currentLine = lines[i].trim();
         if (!currentLine) continue; 
         
-        // Separamos por comas de forma inteligente para no romper textos con espacios
-        const row = [];
-        let insideQuotes = false;
-        let entries = "";
-        
-        for (let j = 0; j < currentLine.length; j++) {
-            let char = currentLine[j];
-            if (char === '"') {
-                insideQuotes = !insideQuotes;
-            } else if (char === ',' && !insideQuotes) {
-                row.push(entries.trim().replace(/^"|"$/g, ''));
-                entries = "";
-            } else {
-                entries += char;
-            }
-        }
-        row.push(entries.trim().replace(/^"|"$/g, ''));
-
+        const matches = currentLine.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || currentLine.split(",");
         const obj = {};
+        
         headers.forEach((header, index) => {
-            obj[header] = row[index] || "";
+            let value = matches[index] ? matches[index].trim() : "";
+            obj[header] = value.replace(/^"|"$/g, ''); 
         });
         result.push(obj);
     }
@@ -93,23 +77,22 @@ async function getProducts() {
 
         console.log("Productos recibidos con éxito:", data);
 
-        // Seleccionamos las 5 tarjetas del HTML
+        // Seleccionamos las tarjetas que tienen el <span>$</span> fijo en el HTML
         const cards = document.querySelectorAll(".card-product");
 
         cards.forEach((card, index) => {
             const product = data[index];
 
-            // Si el Excel no tiene información para esta tarjeta, la ocultamos
+            // Si el Excel no tiene información para esta tarjeta, la ocultamos de la pantalla
             if (!product) {
                 card.style.display = "none";
                 return;
             }
 
+            // Rellenamos los datos de los textos e imágenes
             card.style.display = "block";
             card.querySelector("img").src = product.image || "images/cloud-upload-signal.svg";
             card.querySelector("img").alt = product.name || "alfombra";
-            
-            // Usamos textContent de forma segura para nombres completos
             card.querySelector(".title-product").textContent = product.name || "";
             card.querySelector(".description-product").textContent = product.description || "";
             card.querySelector(".dimensions").textContent = product.dimensions || "";
@@ -118,16 +101,11 @@ async function getProducts() {
             const priceParagraph = card.querySelector(".price");
             const spanSigno = priceParagraph.querySelector("span");
 
-            // Limpiamos cualquier precio numérico anterior si GitHub recarga el script
-            const nodosTexto = Array.from(priceParagraph.childNodes);
-            nodosTexto.forEach(nodo => {
-                if (nodo !== spanSigno) {
-                    nodo.remove();
-                }
-            });
-
             if (product.price) {
+                // Formateamos el número de forma limpia (ej: 120000 -> 120.000)
                 const numeroFormateado = Number(product.price).toLocaleString("es-CO");
+                
+                // Inserta el número justo después del <span>$</span> sin romper nada
                 spanSigno.insertAdjacentText("afterend", numeroFormateado);
             } else {
                 priceParagraph.textContent = "Consultar precio";
@@ -139,6 +117,7 @@ async function getProducts() {
     }
 }
 
+// Carga los productos automáticamente al abrir la página
 window.addEventListener("DOMContentLoaded", () => {
     getProducts();
 });

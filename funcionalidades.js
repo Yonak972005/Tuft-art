@@ -45,26 +45,46 @@ const sheetCsvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTOrtb890NB
 
 // Función para procesar y organizar las filas del documento Excel (CSV)
 function parseCSV(text) {
-    const lines = text.split("\n");
-    if (lines.length === 0) return [];
-    
-    const headers = lines[0].split(",").map(h => h.trim().replace(/^"|"$/g, ''));
-    const result = [];
+    const rows = [];
+    let row = [];
+    let value = "";
+    let insideQuotes = false;
 
-    for (let i = 1; i < lines.length; i++) {
-        const currentLine = lines[i].trim();
-        if (!currentLine) continue; 
-        
-        const matches = currentLine.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || currentLine.split(",");
-        const obj = {};
-        
-        headers.forEach((header, index) => {
-            let value = matches[index] ? matches[index].trim() : "";
-            obj[header] = value.replace(/^"|"$/g, ''); 
-        });
-        result.push(obj);
+    for (let index = 0; index < text.length; index++) {
+        const character = text[index];
+        const nextCharacter = text[index + 1];
+
+        if (character === '"' && insideQuotes && nextCharacter === '"') {
+            value += '"';
+            index++;
+        } else if (character === '"') {
+            insideQuotes = !insideQuotes;
+        } else if (character === "," && !insideQuotes) {
+            row.push(value.trim());
+            value = "";
+        } else if ((character === "\n" || character === "\r") && !insideQuotes) {
+            if (character === "\r" && nextCharacter === "\n") index++;
+            row.push(value.trim());
+            if (row.some(cell => cell !== "")) rows.push(row);
+            row = [];
+            value = "";
+        } else {
+            value += character;
+        }
     }
-    return result;
+
+    row.push(value.trim());
+    if (row.some(cell => cell !== "")) rows.push(row);
+    if (rows.length === 0) return [];
+
+    const headers = rows[0];
+    return rows.slice(1).map(columns => {
+        const product = {};
+        headers.forEach((header, index) => {
+            product[header] = columns[index] || "";
+        });
+        return product;
+    });
 }
 
 async function getProducts() {

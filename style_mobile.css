@@ -117,7 +117,8 @@ Diseño base
     text-shadow: 0px 1px 20px #000000;
 }
 
-.banner-content button {
+.banner-content button,
+.banner-content .quote-cta {
     background-color: #E63946;
     color: black;
     border: none;
@@ -130,7 +131,8 @@ Diseño base
     transition: transform 0.3s ease;
 }
 
-.banner-content button:hover {
+.banner-content button:hover,
+.banner-content .quote-cta:hover {
     transform: scale(1.1);
 }
 

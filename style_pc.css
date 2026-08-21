@@ -113,7 +113,8 @@
     text-shadow: 0px 1px 20px #000000;
 }
 
-.banner-content button {
+.banner-content button,
+.banner-content .quote-cta {
     font-family: 'Fredoka', sans-serif;
     background-color: #E63946;
     font-weight: 600;
@@ -122,7 +123,8 @@
     padding: 6.4px 8px 8px 8px;
 }
 
-.banner-content button:hover {
+.banner-content button:hover,
+.banner-content .quote-cta:hover {
     color: beige;
 }
 

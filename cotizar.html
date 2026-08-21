@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cotiza tu alfombra | Tuft Art</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Signika:wght@300..700&display=swap">
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="style_mobile.css">
+    <link rel="stylesheet" href="style_pc.css">
+    <link rel="stylesheet" href="style_cotizar.css">
+    <link rel="icon" type="image/png" href="images/tuft_redondo.png">
+
+</head>
+<body>
+    <section class="top-bar">
+        <div class="top-redes">
+            <a href="https://www.facebook.com/" target="_blank" rel="noopener"><img src="https://cdn.simpleicons.org/facebook" alt="Facebook"></a>
+            <a href="https://www.instagram.com/" target="_blank" rel="noopener"><img src="https://cdn.simpleicons.org/instagram" alt="Instagram"></a>
+            <a href="https://www.whatsapp.com/" target="_blank" rel="noopener"><img src="https://cdn.simpleicons.org/whatsapp" alt="WhatsApp"></a>
+            <p>Envios a todo Colombia</p>
+            <img id="delivery-icon" src="https://www.svgrepo.com/show/480852/truck-delivery.svg" alt="Envíos">
+        </div>
+    </section>
+
+    <header class="left_logo">
+        <a href="index.html"><img id="logo" src="images/tuft_redondo.png" alt="Tuft Art Logo"></a>
+        <div class="logo_text">
+            <h1 class="logo_name">Tuft<span id="text_art">Art</span></h1>
+            <p class="logo_slogan">Personaliza tu alfombra</p>
+        </div>
+        <div class="navbar">
+            <nav aria-label="Navegación principal">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="productos.html">Catálogo</a></li>
+                    <li><a href="cotizar.html">Personaliza tu alfombra</a></li>
+                    <li><a href="index.html#sobre-nosotros">Sobre nosotros</a></li>
+                    <li><a href="index.html#contacto">Contacto</a></li>
+                    <li><a href="index.html#carrito" aria-label="Ver carrito de compra">Carrito <span id="cart-count">0</span></a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="quote-page">
+        <section class="quote-intro">
+            <p class="quote-kicker">Tu diseño, hecho alfombra</p>
+            <h1>Solicita tu cotización</h1>
+            <p>Cuéntanos qué tienes en mente y envíanos una referencia para preparar una propuesta.</p>
+        </section>
+
+        <form id="quote-form" class="quote-form">
+            <div class="quote-fields">
+                <label for="customer-name">Tu nombre</label>
+                <input id="customer-name" name="customerName" type="text" autocomplete="name" required>
+
+                <label for="customer-email">Correo electrónico</label>
+                <input id="customer-email" name="customerEmail" type="email" autocomplete="email" placeholder="nombre@ejemplo.com" required>
+
+                <label for="customer-phone">Teléfono</label>
+                <input id="customer-phone" name="customerPhone" type="tel" autocomplete="tel" inputmode="tel" placeholder="3001234567" required>
+
+                <label for="quote-message">Cuéntanos tu idea</label>
+                <textarea id="quote-message" name="message" rows="5" maxlength="500" placeholder="Ejemplo: quiero una alfombra redonda de 1 metro con este diseño..." required></textarea>
+
+                <label for="design-image">Imagen o diseño de referencia</label>
+                <input id="design-image" name="designImage" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+                <p class="file-hint">Para correo: JPG, PNG o WebP, mínimo 1200 x 1200 px y máximo 10 MB.</p>
+            </div>
+
+            <div class="image-preview-area">
+                <p>Vista previa</p>
+                <div id="image-preview" class="image-preview" aria-live="polite">Selecciona una imagen</div>
+            </div>
+
+            <div class="quote-actions">
+                <button class="quote-button quote-button-submit" type="submit">Enviar cotización</button>
+            </div>
+            <p id="quote-status" class="quote-status" role="status"></p>
+        </form>
+    </main>
+
+    <script src="funcionalidades.js"></script>
+    <script src="cotizar.js"></script>
+</body>
+</html>

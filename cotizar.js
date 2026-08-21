@@ -3,6 +3,10 @@ const imageInput = document.getElementById("design-image");
 const imagePreview = document.getElementById("image-preview");
 const statusMessage = document.getElementById("quote-status");
 
+if (!quoteForm || !imageInput || !imagePreview || !statusMessage) {
+    throw new Error("Faltan elementos del formulario de cotización.");
+}
+
 function getQuoteData() {
     const formData = new FormData(quoteForm);
     return {
@@ -46,15 +50,20 @@ function validateImage(file) {
         }
 
         const image = new Image();
+        const objectUrl = URL.createObjectURL(file);
         image.addEventListener("load", () => {
+            URL.revokeObjectURL(objectUrl);
             if (image.width < 1200 || image.height < 1200) {
                 reject("La imagen debe tener como mínimo 1200 x 1200 píxeles.");
                 return;
             }
             resolve();
         });
-        image.addEventListener("error", () => reject("No se pudo leer la imagen seleccionada."));
-        image.src = URL.createObjectURL(file);
+        image.addEventListener("error", () => {
+            URL.revokeObjectURL(objectUrl);
+            reject("No se pudo leer la imagen seleccionada.");
+        });
+        image.src = objectUrl;
     });
 }
 

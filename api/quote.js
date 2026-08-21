@@ -8,10 +8,11 @@ export const config = {
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024;
 const MIN_IMAGE_SIZE = 1200;
+const MAX_MESSAGE_LENGTH = 500;
 const ALLOWED_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
 
 function getImageDimensions(buffer, mimeType) {
-    if (mimeType === "image/png" && buffer.toString("ascii", 1, 4) === "PNG") {
+    if (mimeType === "image/png" && buffer.length >= 24 && buffer.readUInt32BE(0) === 0x89504e47) {
         return { width: buffer.readUInt32BE(16), height: buffer.readUInt32BE(20) };
     }
 
@@ -31,8 +32,10 @@ function getImageDimensions(buffer, mimeType) {
                 offset++;
                 continue;
             }
+            if (offset + 3 >= buffer.length) return null;
             const marker = buffer[offset + 1];
             const segmentLength = buffer.readUInt16BE(offset + 2);
+            if (segmentLength < 2 || offset + segmentLength + 2 > buffer.length) return null;
             if ([0xc0, 0xc1, 0xc2, 0xc3, 0xc5, 0xc6, 0xc7, 0xc9, 0xca, 0xcb, 0xcd, 0xce, 0xcf].includes(marker)) {
                 return { width: buffer.readUInt16BE(offset + 7), height: buffer.readUInt16BE(offset + 5) };
             }
@@ -89,6 +92,10 @@ function validateRequest(fields, image) {
     const phone = fields.customerPhone.replace(/[\s()-]/g, "");
     if (!/^(?:\+?57)?3\d{9}$/.test(phone)) {
         return "El teléfono colombiano no es válido.";
+    }
+
+    if (fields.message.length > MAX_MESSAGE_LENGTH) {
+        return "La idea no puede superar los 500 caracteres.";
     }
 
     if (!ALLOWED_TYPES.has(image.mimeType)) {

@@ -1,69 +1,5 @@
-    const benefitsSlider = document.querySelector('.benefits');
-    const benefits = document.querySelectorAll('.benefit');
-    const benefitsDots = document.querySelectorAll('.benefits-dots button');
-
-    const menuToggle = document.querySelector('.menu-toggle');
-    const mobileNav = document.querySelector('.navbar-mobile');
-
-    if (menuToggle && mobileNav) {
-        const closeMobileNav = () => {
-            menuToggle.setAttribute('aria-expanded', 'false');
-            menuToggle.setAttribute('aria-label', 'Abrir menú');
-        };
-
-        menuToggle.addEventListener('click', () => {
-            const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
-            menuToggle.setAttribute('aria-expanded', String(!isOpen));
-            menuToggle.setAttribute('aria-label', isOpen ? 'Abrir menú' : 'Cerrar menú');
-        });
-
-        mobileNav.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', closeMobileNav);
-        });
-
-        document.addEventListener('click', event => {
-            if (!mobileNav.contains(event.target) && !menuToggle.contains(event.target)) {
-                closeMobileNav();
-            }
-        });
-
-        document.addEventListener('keydown', event => {
-            if (event.key === 'Escape') closeMobileNav();
-        });
-    }
-
-    if (benefitsSlider && benefits.length && benefitsDots.length) {
-        function updateBenefitsDot() {
-            const activeIndex = Math.round(benefitsSlider.scrollLeft / benefitsSlider.clientWidth);
-
-            benefitsDots.forEach((dot, index) => {
-                const isActive = index === activeIndex;
-                dot.classList.toggle('active', isActive);
-
-                if (isActive) {
-                    dot.setAttribute('aria-current', 'true');
-                } else {
-                    dot.removeAttribute('aria-current');
-                }
-            });
-        }
-
-        benefitsDots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                benefitsSlider.scrollTo({
-                    left: index * benefitsSlider.clientWidth,
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        benefitsSlider.addEventListener('scroll', updateBenefitsDot, { passive: true });
-    }
-
-// Copia sincronizada desde Google Sheets durante el despliegue
 const sheetCsvUrl = "productos.csv";
 
-// Función para procesar y organizar las filas del documento Excel (CSV)
 function parseCSV(text) {
     const rows = [];
     let row = [];
@@ -97,7 +33,7 @@ function parseCSV(text) {
     if (row.some(cell => cell !== "")) rows.push(row);
     if (rows.length === 0) return [];
 
-    const headers = rows[0];
+    const headers = rows[0].map(header => header.trim());
     return rows.slice(1).map(columns => {
         const product = {};
         headers.forEach((header, index) => {
@@ -107,9 +43,38 @@ function parseCSV(text) {
     });
 }
 
-async function getProducts() {
-    console.log("Consultando productos desde Google Sheets...");
-    
+function createProductCard(product) {
+    const card = document.createElement("article");
+    card.className = "card-product";
+
+    const image = document.createElement("img");
+    image.src = product.image || "images/cloud-upload-signal.svg";
+    image.alt = product.name || "Alfombra";
+
+    const details = document.createElement("div");
+    details.innerHTML = `
+        <h3 class="title-product"></h3>
+        <p class="description-product"></p>
+        <p class="dimensions"></p>
+        <p class="price"></p>
+    `;
+    details.querySelector(".title-product").textContent = product.name;
+    details.querySelector(".description-product").textContent = product.description;
+    details.querySelector(".dimensions").textContent = product.dimensions;
+
+    const price = details.querySelector(".price");
+    price.textContent = product.price
+        ? `$${Number(product.price).toLocaleString("es-CO")}`
+        : "Consultar precio";
+
+    card.append(image, details);
+    return card;
+}
+
+async function loadProducts() {
+    const productsContainer = document.querySelector(".products");
+    if (!productsContainer) return;
+
     try {
         const response = await fetch(`${sheetCsvUrl}?v=${Date.now()}`, {
             cache: "no-store"
@@ -117,53 +82,62 @@ async function getProducts() {
         if (!response.ok) {
             throw new Error(`No se pudo cargar el catálogo (${response.status})`);
         }
-        const csvText = await response.text();
-        const data = parseCSV(csvText);
-
-        console.log("Productos recibidos con éxito:", data);
-
-        // Seleccionamos las tarjetas que tienen el <span>$</span> fijo en el HTML
-        const cards = document.querySelectorAll(".card-product");
-
-        cards.forEach((card, index) => {
-            const product = data[index];
-
-            // Si el Excel no tiene información para esta tarjeta, la ocultamos de la pantalla
-            if (!product) {
-                card.style.display = "none";
-                return;
-            }
-
-            // Rellenamos los datos de los textos e imágenes
-            card.style.display = "block";
-            card.querySelector("img").src = product.image || "images/cloud-upload-signal.svg";
-            card.querySelector("img").alt = product.name || "alfombra";
-            card.querySelector(".title-product").textContent = product.name || "";
-            card.querySelector(".description-product").textContent = product.description || "";
-            card.querySelector(".dimensions").textContent = product.dimensions || "";
-            
-            // Buscamos el párrafo del precio
-            const priceParagraph = card.querySelector(".price");
-            const spanSigno = priceParagraph.querySelector("span");
-
-            if (product.price) {
-                // Formateamos el número de forma limpia (ej: 120000 -> 120.000)
-                const numeroFormateado = Number(product.price).toLocaleString("es-CO");
-                
-                // Inserta el número justo después del <span>$</span> sin romper nada
-                spanSigno.insertAdjacentText("afterend", numeroFormateado);
-            } else {
-                priceParagraph.textContent = "Consultar precio";
-            }
-        });
-
+        const data = parseCSV(await response.text());
+        const limit = Number(productsContainer.dataset.limit) || data.length;
+        const fragment = document.createDocumentFragment();
+        data.slice(0, limit).forEach(product => fragment.append(createProductCard(product)));
+        productsContainer.replaceChildren(fragment);
     } catch (error) {
-        console.error("Error al cargar el catálogo desde el Excel:", error);
+        console.error("Error al cargar el catálogo:", error);
+        productsContainer.textContent = "No se pudo cargar el catálogo.";
     }
 }
 
-// Carga los productos automáticamente al abrir la página
-window.addEventListener("DOMContentLoaded", () => {
-    getProducts();
+function setupMenu() {
+    const menuToggle = document.querySelector(".menu-toggle");
+    const mobileNav = document.querySelector(".navbar-mobile");
+    if (!menuToggle || !mobileNav) return;
+
+    const closeMenu = () => {
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.setAttribute("aria-label", "Abrir menú");
+    };
+    menuToggle.addEventListener("click", () => {
+        const isOpen = menuToggle.getAttribute("aria-expanded") === "true";
+        menuToggle.setAttribute("aria-expanded", String(!isOpen));
+        menuToggle.setAttribute("aria-label", isOpen ? "Abrir menú" : "Cerrar menú");
+    });
+    mobileNav.querySelectorAll("a").forEach(link => link.addEventListener("click", closeMenu));
+    document.addEventListener("click", event => {
+        if (!mobileNav.contains(event.target) && !menuToggle.contains(event.target)) closeMenu();
+    });
+    document.addEventListener("keydown", event => {
+        if (event.key === "Escape") closeMenu();
+    });
+}
+
+function setupBenefitsSlider() {
+    const slider = document.querySelector(".benefits");
+    const dots = document.querySelectorAll(".benefits-dots button");
+    if (!slider || !dots.length) return;
+
+    const updateDots = () => {
+        const activeIndex = Math.round(slider.scrollLeft / slider.clientWidth);
+        dots.forEach((dot, index) => {
+            dot.classList.toggle("active", index === activeIndex);
+            dot.toggleAttribute("aria-current", index === activeIndex);
+        });
+    };
+    dots.forEach((dot, index) => dot.addEventListener("click", () => slider.scrollTo({
+        left: index * slider.clientWidth,
+        behavior: "smooth"
+    })));
+    slider.addEventListener("scroll", updateDots, { passive: true });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    setupMenu();
+    setupBenefitsSlider();
+    loadProducts();
 });
 

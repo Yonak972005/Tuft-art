@@ -106,7 +106,6 @@
     text-shadow: 0px 1px 20px #000000;
 }
 
-.banner-content button,
 .banner-content .quote-cta {
     font-family: 'Fredoka', sans-serif;
     background-color: #E63946;
@@ -116,7 +115,6 @@
     padding: 6.4px 8px 8px 8px;
 }
 
-.banner-content button:hover,
 .banner-content .quote-cta:hover {
     color: beige;
 }
@@ -161,7 +159,7 @@
 }
 
 .how-works{
-    box-shadow: 0px 0.8px 20px 8px rgba(255, 255, 255, 105);
+    box-shadow: 0 1px 20px 8px rgba(255, 255, 255, 0.4);
 
 }
 
@@ -216,12 +214,10 @@
 
 }
 
-/* 📺 TV / PANTALLAS GRANDES
+/* TV / PANTALLAS GRANDES
 1441px en adelante
 */
 @media (min-width: 1441px) {
 
 }
-
-
 }

@@ -29,12 +29,15 @@ jobs:
           fi
           mv productos.csv.tmp productos.csv
 
+      - name: Generar catálogo HTML
+        run: npm run build:catalog
+
       - name: Commit updated products
         run: |
           # Solo crea un commit cuando el contenido descargado realmente cambió.
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add productos.csv
+          git add productos.csv index.html productos.html
           if git diff --cached --quiet; then
             echo "Google Sheets no tiene cambios nuevos."
           else

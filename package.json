@@ -2,6 +2,9 @@
   "name": "tuft-art",
   "private": true,
   "type": "module",
+  "scripts": {
+    "build:catalog": "node scripts/generar-catalogo.js"
+  },
   "dependencies": {
     "busboy": "^1.6.0"
   }

@@ -11,6 +11,7 @@ const MIN_IMAGE_SIZE = 1200;
 const MAX_MESSAGE_LENGTH = 500;
 const ALLOWED_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
 
+// Lee dimensiones básicas sin guardar la imagen en disco ni depender de un conversor externo.
 function getImageDimensions(buffer, mimeType) {
     if (mimeType === "image/png" && buffer.length >= 24 && buffer.readUInt32BE(0) === 0x89504e47) {
         return { width: buffer.readUInt32BE(16), height: buffer.readUInt32BE(20) };
@@ -47,6 +48,7 @@ function getImageDimensions(buffer, mimeType) {
 }
 
 function parseMultipart(request) {
+    // Busboy procesa la carga multipart en streaming y limita el tamaño del archivo.
     return new Promise((resolve, reject) => {
         const contentType = request.headers["content-type"];
         const busboy = Busboy({ headers: { "content-type": contentType }, limits: { fileSize: MAX_FILE_SIZE } });
@@ -169,6 +171,7 @@ async function sendWhatsApp(message) {
 }
 
 export default async function handler(request, response) {
+    // Punto de entrada de Vercel: valida la petición y notifica por ambos canales.
     if (request.method !== "POST") {
         response.status(405).json({ error: "Método no permitido." });
         return;

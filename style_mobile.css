@@ -1,4 +1,4 @@
-/* Reset y box-sizing global */
+/* Reglas base y componentes optimizados para móvil. */
 *,
 *::before,
 *::after {
@@ -17,12 +17,12 @@ body::-webkit-scrollbar {
     display: none;
 }
 
-/* 📱 MÓVIL
+/* MÓVIL
 0px - 600px
 Diseño base
 */
 
-/* Style top */
+/* Barra superior y encabezado. */
 .top-redes{
     background-color: #000000;
     width: 100%;
@@ -481,7 +481,7 @@ Diseño base
     font-weight: 700;
 }
 
-/* 📱 TABLET
+/* TABLET
 601px - 899px
 */
 @media (min-width: 601px) {

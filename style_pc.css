@@ -1,7 +1,8 @@
-/* 💻 COMPUTADOR
+/* COMPUTADOR
 900px - 1440px
 */
 @media (min-width: 900px) {
+    /* Ajustes de navegación, banner y cuadrículas para escritorio. */
     .top-redes {
     background-color: beige;
     padding-left: 8px;

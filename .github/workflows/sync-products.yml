@@ -1,5 +1,6 @@
 name: Sync products from Google Sheets
 
+# Permite ejecutarlo manualmente y también una vez al día a las 05:00 UTC.
 on:
   workflow_dispatch:
   schedule:
@@ -17,7 +18,9 @@ jobs:
 
       - name: Download products CSV
         run: |
+          # Descarga primero a un archivo temporal para no reemplazar un CSV válido si falla.
           curl --fail --location --silent --show-error "https://docs.google.com/spreadsheets/d/e/2PACX-1vTOrtb890NBzVIpObAuVqlxUvxQuqC68hrkHSgkfuWkZyqGHEgPmKf5Dw5mnIUN-ePUo2yQhzVuCehx/pub?gid=0&single=true&output=csv&v=$(date +%s)" -o productos.csv.tmp
+          # Evita publicar una sincronización vacía o incompleta.
           product_count=$(tail -n +2 productos.csv.tmp | grep -c '[^[:space:]]' || true)
           if [ "$product_count" -lt 10 ]; then
             echo "La hoja debe contener al menos 10 productos. Se encontraron: $product_count"
@@ -28,6 +31,7 @@ jobs:
 
       - name: Commit updated products
         run: |
+          # Solo crea un commit cuando el contenido descargado realmente cambió.
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add productos.csv

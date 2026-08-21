@@ -1,3 +1,4 @@
+/* Apariencia y distribución exclusiva del formulario de cotización. */
 body {
     background: #f7f3eb;
 }
@@ -137,6 +138,7 @@ body {
     font: 16px 'Signika', sans-serif;
 }
 
+/* En pantallas pequeñas el formulario pasa a una sola columna. */
 @media (max-width: 700px) {
     .quote-page {
         margin-top: 28px;

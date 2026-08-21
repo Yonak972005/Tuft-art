@@ -1,5 +1,6 @@
 const sheetCsvUrl = "productos.csv";
 
+// Convierte el CSV en objetos, respetando campos entre comillas y saltos de línea.
 function parseCSV(text) {
     const rows = [];
     let row = [];
@@ -83,6 +84,7 @@ async function loadProducts() {
             throw new Error(`No se pudo cargar el catálogo (${response.status})`);
         }
         const data = parseCSV(await response.text());
+        // Inicio limita la cantidad con data-limit; catálogo no establece límite.
         const limit = Number(productsContainer.dataset.limit) || data.length;
         const fragment = document.createDocumentFragment();
         data.slice(0, limit).forEach(product => fragment.append(createProductCard(product)));

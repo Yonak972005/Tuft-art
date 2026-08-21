@@ -15,6 +15,7 @@
 
 </head>
 <body>
+<!-- Encabezado compartido con el resto del sitio. -->
 <section class="top-bar">
     <div class="top-redes">
         <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
@@ -70,6 +71,7 @@
     </div>
 </section> 
 
+    <!-- Formulario que recopila los datos y la imagen de referencia del cliente. -->
     <main class="quote-page">
         <section class="quote-intro">
             <p class="quote-kicker">Tu diseño, hecho alfombra</p>
@@ -96,6 +98,7 @@
                 <p class="file-hint">Para correo: JPG, PNG o WebP, mínimo 1200 x 1200 px y máximo 10 MB.</p>
             </div>
 
+            <!-- La vista previa se actualiza al seleccionar una imagen válida. -->
             <div class="image-preview-area">
                 <p>Vista previa</p>
                 <div id="image-preview" class="image-preview" aria-live="polite">Selecciona una imagen</div>
@@ -108,6 +111,7 @@
         </form>
     </main>
 
+    <!-- Ambos scripts esperan a que el HTML esté disponible antes de ejecutarse. -->
     <script src="funcionalidades.js" defer></script>
     <script src="cotizar.js" defer></script>
 </body>

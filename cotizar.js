@@ -3,6 +3,7 @@ const imageInput = document.getElementById("design-image");
 const imagePreview = document.getElementById("image-preview");
 const statusMessage = document.getElementById("quote-status");
 
+// Este archivo solo se carga en cotizar.html; evita fallos si se reutiliza en otra página.
 if (!quoteForm || !imageInput || !imagePreview || !statusMessage) {
     throw new Error("Faltan elementos del formulario de cotización.");
 }
@@ -32,6 +33,7 @@ function validateContactData(data) {
 }
 
 function validateImage(file) {
+    // La dimensión se verifica en el navegador antes de enviar el archivo al servidor.
     return new Promise((resolve, reject) => {
         if (!file) {
             reject("Selecciona una imagen para enviarla por correo.");
@@ -84,6 +86,7 @@ imageInput.addEventListener("change", () => {
 });
 
 quoteForm.addEventListener("submit", async (event) => {
+    // El servidor repite estas validaciones; la validación del cliente solo mejora la respuesta.
     event.preventDefault();
     if (!quoteForm.reportValidity()) return;
     const data = getQuoteData();

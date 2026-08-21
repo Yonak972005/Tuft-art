@@ -1,13 +1,3 @@
-    const cartCount = document.getElementById('cart-count');
-
-    function setCartCount(count) {
-        const total = Number(count) || 0;
-        cartCount.textContent = total;
-        cartCount.classList.toggle('visible', total > 0);
-    }
-
-    setCartCount(0);
-
     const benefitsSlider = document.querySelector('.benefits');
     const benefits = document.querySelectorAll('.benefit');
     const benefitsDots = document.querySelectorAll('.benefits-dots button');

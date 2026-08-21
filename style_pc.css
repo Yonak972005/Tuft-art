@@ -74,21 +74,14 @@
     color: #e63946;
 }
 
-#cart-count {
+.navbar-mobile{
     display: none;
-    margin-left: 4.8px;
-    background: #e63946;
-    color: #fff;
-    border-radius: 999px;
-    padding: 1.6px 5.6px;
-    font-size: 9.6px;
-    font-weight: 700;
-    line-height: 1.2;
 }
 
-#cart-count.visible {
-    display: inline-block;
+.menu-toggle{
+    display: none;
 }
+
 
 .banner img {
     width: 100%;

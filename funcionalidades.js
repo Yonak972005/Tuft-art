@@ -2,6 +2,36 @@
     const benefits = document.querySelectorAll('.benefit');
     const benefitsDots = document.querySelectorAll('.benefits-dots button');
 
+    const menuToggle = document.querySelector('.menu-toggle');
+    const mobileNav = document.querySelector('.navbar-mobile');
+
+    if (menuToggle && mobileNav) {
+        const closeMobileNav = () => {
+            menuToggle.setAttribute('aria-expanded', 'false');
+            menuToggle.setAttribute('aria-label', 'Abrir menú');
+        };
+
+        menuToggle.addEventListener('click', () => {
+            const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', String(!isOpen));
+            menuToggle.setAttribute('aria-label', isOpen ? 'Abrir menú' : 'Cerrar menú');
+        });
+
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', closeMobileNav);
+        });
+
+        document.addEventListener('click', event => {
+            if (!mobileNav.contains(event.target) && !menuToggle.contains(event.target)) {
+                closeMobileNav();
+            }
+        });
+
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape') closeMobileNav();
+        });
+    }
+
     if (benefitsSlider && benefits.length && benefitsDots.length) {
         function updateBenefitsDot() {
             const activeIndex = Math.round(benefitsSlider.scrollLeft / benefitsSlider.clientWidth);

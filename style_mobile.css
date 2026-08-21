@@ -5,6 +5,19 @@
     box-sizing: border-box;
 }
 
+html,
+body {
+    overflow-x: hidden;
+    overflow-x: clip;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none;
+}
+
 /* 📱 MÓVIL
 0px - 600px
 Diseño base
@@ -45,6 +58,7 @@ Diseño base
 .left_logo{
     width: 100%;
     height: 70px;
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -88,7 +102,107 @@ Diseño base
 }
 
 .navbar-mobile{
-    
+    display: none;
+    position: absolute;
+    top: 75px;
+    left: 5%;
+    z-index: 10;
+    width: 90%;
+    padding: 12px 20px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+}
+
+.menu-toggle[aria-expanded="true"] ~ .navbar-mobile {
+    display: block;
+}
+
+.navbar-mobile ul {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.navbar-mobile a {
+    display: block;
+    padding: 11px 8px;
+    color: #111111;
+    font-family: 'Signika', sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.navbar-mobile a:hover,
+.navbar-mobile a:focus-visible {
+    color: #e63946;
+}
+
+.menu-toggle {
+    display: flex;
+    position: relative;
+    left: -20px;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 42px;
+    width: 42px;
+    height: 42px;
+    margin-left: 12px;
+    padding: 10px;
+    border: 0;
+    border-radius: 9px;
+    background-color:beige;
+    cursor: pointer;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.menu-toggle span {
+    position: absolute;
+    width: 21px;
+    height: 3px;
+    border-radius: 2px;
+    background: #111111;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.menu-toggle span:nth-child(1) {
+    transform: translateY(-7px);
+}
+
+.menu-toggle span:nth-child(3) {
+    transform: translateY(7px);
+}
+
+.menu-toggle:hover,
+.menu-toggle:focus-visible {
+    background: #f3eeda;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.18);
+    outline: none;
+}
+
+.menu-toggle[aria-expanded="true"] {
+    background-color: #e63946;
+    box-shadow: 0 3px 10px rgba(230, 57, 70, 0.3);
+}
+
+.menu-toggle[aria-expanded="true"] span {
+    background: #ffffff;
+}
+
+.menu-toggle[aria-expanded="true"] span:nth-child(1) {
+    transform: rotate(45deg);
+}
+
+.menu-toggle[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle[aria-expanded="true"] span:nth-child(3) {
+    transform: rotate(-45deg);
 }
 
 .banner {
@@ -149,6 +263,7 @@ Diseño base
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
+    -ms-overflow-style: none;
     background-color: beige;
     margin-top: 10px;
 }

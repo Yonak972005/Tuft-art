@@ -16,7 +16,15 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Download products CSV
-        run: curl --fail --location --silent --show-error "https://docs.google.com/spreadsheets/d/e/2PACX-1vTOrtb890NBzVIpObAuVqlxUvxQuqC68hrkHSgkfuWkZyqGHEgPmKf5Dw5mnIUN-ePUo2yQhzVuCehx/pub?gid=0&single=true&output=csv&v=$(date +%s)" -o productos.csv
+        run: |
+          curl --fail --location --silent --show-error "https://docs.google.com/spreadsheets/d/e/2PACX-1vTOrtb890NBzVIpObAuVqlxUvxQuqC68hrkHSgkfuWkZyqGHEgPmKf5Dw5mnIUN-ePUo2yQhzVuCehx/pub?gid=0&single=true&output=csv&v=$(date +%s)" -o productos.csv.tmp
+          product_count=$(tail -n +2 productos.csv.tmp | grep -c '[^[:space:]]' || true)
+          if [ "$product_count" -lt 10 ]; then
+            echo "La hoja debe contener al menos 10 productos. Se encontraron: $product_count"
+            rm productos.csv.tmp
+            exit 1
+          fi
+          mv productos.csv.tmp productos.csv
 
       - name: Commit updated products
         run: |
